@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,6 +22,7 @@ public class Token implements Serializable {
 
 	static final long serialVersionUID = -3105051330553655401L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "token_id")
 	private Integer tokenId;
 	@Column(name = "user_id")

@@ -25,7 +25,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private Integer idUser;
+	private Integer userId;
 	@Column(name = "first_name")
 	private String firstName;
 	@Column(name = "last_name")
@@ -67,8 +67,8 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public Integer getIdUser() {
-		return idUser;
+	public Integer getUserId() {
+		return userId;
 	}
 
 }
