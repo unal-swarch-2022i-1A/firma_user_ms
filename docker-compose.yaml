@@ -1,0 +1,7 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  user_ms:
+    container_name: firma_user_ms
+    build: .
+    ports:
+      - 8090:8090
