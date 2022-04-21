@@ -5,15 +5,15 @@ CREATE DATABASE "firma_userDataManagement_db"
     CONNECTION LIMIT = -1;
 	
 CREATE TABLE USR (
-	userId SERIAL PRIMARY KEY,
-	firstName VARCHAR(50) NOT NULL,
-	lastName VARCHAR(50) NOT NULL,
-	email VARCHAR(100) NOT NULL,
+	user_id SERIAL PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	email VARCHAR(100) NOT NULL UNIQUE,
 	password VARCHAR(255) NOT NULL
 );
 CREATE TABLE TOKN(
-	tokenId SERIAL PRIMARY KEY,
-	userId int NOT NULL,
-	tokenStr VARCHAR(255) NOT NULL,
-	FOREIGN KEY (userId) REFERENCES USR(userId)
+	token_id SERIAL PRIMARY KEY,
+	user_id int NOT NULL,
+	token_str VARCHAR(255) NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES USR(user_id)
 );

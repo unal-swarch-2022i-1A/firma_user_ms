@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -21,11 +23,12 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 4641523750034765920L;
 
 	@Id
-	@Column(name = "userId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private Integer idUser;
-	@Column(name = "firstName")
+	@Column(name = "first_name")
 	private String firstName;
-	@Column(name = "lastName")
+	@Column(name = "last_name")
 	private String lastName;
 	@Column(name = "email")
 	private String email;

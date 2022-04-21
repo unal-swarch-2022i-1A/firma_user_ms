@@ -20,11 +20,11 @@ public class Token implements Serializable {
 
 	static final long serialVersionUID = -3105051330553655401L;
 	@Id
-	@Column(name = "tokenId")
+	@Column(name = "token_id")
 	private Integer tokenId;
-	@Column(name = "userId")
+	@Column(name = "user_id")
 	private Integer userId;
-	@Column(name = "tokenStr")
+	@Column(name = "token_str")
 	private String tokenStr;
 
 	public Integer getUserId() {
