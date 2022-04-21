@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.firma.firma_userdatamanagement_ms.context;
+package com.firma.firma_user_ms.context;
 
 import java.util.List;
 import java.util.Map;
@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import com.firma.firma_userdatamanagement_ms.model.Token;
-import com.firma.firma_userdatamanagement_ms.model.User;
+import com.firma.firma_user_ms.model.Token;
+import com.firma.firma_user_ms.model.User;
 
 /**
  * @author Marcos

@@ -1,13 +1,13 @@
-package com.firma.firma_userdatamanagement_ms;
+package com.firma.firma_user_ms;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FirmaUserdatamanagementMsApplication {
+public class FirmaUserMsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FirmaUserdatamanagementMsApplication.class, args);
+		SpringApplication.run(FirmaUserMsApplication.class, args);
 	}
 
 }
