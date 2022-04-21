@@ -25,7 +25,7 @@ import com.firma.firma_user_ms.model.User;
  *
  */
 @RestController
-@RequestMapping("user-data-ms")
+@RequestMapping("user-ms")
 public class UserDataAPI {
 	@Autowired
 	private UserRepository usrRepo;
