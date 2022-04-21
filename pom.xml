@@ -8,9 +8,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.firma</groupId>
-	<artifactId>firma_userdatamanagement_ms</artifactId>
+	<artifactId>firma_user_ms</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>firma_userdatamanagement_ms</name>
+	<name>firma_user_ms</name>
 	<description>Microservice for the user data management</description>
 	<properties>
 		<java.version>1.8</java.version>

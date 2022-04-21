@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.firma.firma_userdatamanagement_ms.model;
+package com.firma.firma_user_ms.model;
 
 import java.io.Serializable;
 

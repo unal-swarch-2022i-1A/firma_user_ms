@@ -1,12 +1,12 @@
 /**
  * 
  */
-package com.firma.firma_userdatamanagement_ms.dao;
+package com.firma.firma_user_ms.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.firma.firma_userdatamanagement_ms.model.Token;
+import com.firma.firma_user_ms.model.Token;
 
 /**
  * @author Marcos

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.firma.firma_userdatamanagement_ms.controller;
+package com.firma.firma_user_ms.controller;
 
 import java.util.Map;
 
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.firma.firma_userdatamanagement_ms.context.AppContext;
-import com.firma.firma_userdatamanagement_ms.dao.TokenRepository;
-import com.firma.firma_userdatamanagement_ms.dao.UserRepository;
-import com.firma.firma_userdatamanagement_ms.model.User;
+import com.firma.firma_user_ms.context.AppContext;
+import com.firma.firma_user_ms.dao.TokenRepository;
+import com.firma.firma_user_ms.dao.UserRepository;
+import com.firma.firma_user_ms.model.User;
 
 /**
  * @author Marcos
