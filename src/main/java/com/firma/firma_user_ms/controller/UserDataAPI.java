@@ -42,13 +42,13 @@ public class UserDataAPI {
 		return new ResponseEntity<>(user, HttpStatus.CREATED);
 	}
 	
-	@DeleteMapping()
+	@DeleteMapping("/{userId}")
 	public void deleteUser(@PathVariable int userId) {
 		User user = usrRepo.findUserById(userId);
 		usrRepo.delete(user);
 	}
 	
-	@PutMapping()
+	@PutMapping("/{userId}")
 	public ResponseEntity<User> updateUser(@PathVariable int userId,  @RequestBody Map<String, String> jsonObject) {
 		User user = usrRepo.findUserById(userId);
 		user.setFirstName(jsonObject.get("firstName"));
@@ -59,7 +59,7 @@ public class UserDataAPI {
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
-	@GetMapping()
+	@GetMapping("/{userId}")
 	public ResponseEntity<User> getUserInfo(@PathVariable int userId){
 		return new ResponseEntity<>(usrRepo.findUserById(userId), HttpStatus.OK);
 	}
