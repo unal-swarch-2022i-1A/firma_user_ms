@@ -64,4 +64,10 @@ public class UserDataAPI {
 		return new ResponseEntity<>(usrRepo.findUserById(userId), HttpStatus.OK);
 	}
 	
+	@PostMapping("/user")
+	public ResponseEntity<User> getUserbyEmail(@RequestBody Map<String, String> jsonObject){
+		String email = jsonObject.get("email");
+		return new ResponseEntity<>(usrRepo.findUserByEmail(email), HttpStatus.OK);
+	}
+	
 }
