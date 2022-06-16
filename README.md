@@ -27,5 +27,11 @@ docker build \
 docker run -it --rm \
     --name firma_user_ms \
     --add-host=host.docker.internal:host-gateway \
+    --env-file=config/application.properties.docker \
     firma_user_ms
+```
+
+### import SQL
+```bash
+sudo -u postgres psql -f SQLScript/user-script.sql
 ```
