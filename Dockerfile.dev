@@ -1,0 +1,7 @@
+FROM openjdk:11-jdk-slim
+COPY .mvn /usr/src/app/.mvn
+COPY mvnw /usr/src/app/mvnw
+COPY src /usr/src/app/src
+COPY pom.xml /usr/src/app/pom.xml
+WORKDIR /usr/src/app/
+ENTRYPOINT ./mvnw package
