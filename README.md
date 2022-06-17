@@ -16,10 +16,22 @@ docker run -it --rm \
     mvnw
 ```
 
-## Ejecución
+### Depuración
+En host
+```bash
+sudo netstat -tulpn | grep 5432
+```
+En el contenedor
+```bash
+apt update
+apt install iputils-ping telnet -y
+ping host.docker.internal
+telnet host.docker.internal 5432
+```
+## Lanzamiento contenedor de producción
 ``bash
 docker build \
-    -t firma_user_ms .  \
+    -t firma_user_ms . \
     -f Dockerfile.prod
 ```
 
@@ -31,7 +43,7 @@ docker run -it --rm \
     firma_user_ms
 ```
 
-### import SQL
+### Import SQL
 ```bash
-sudo -u postgres psql -f SQLScript/user-script.sql
+sudo -u postgres psql -f sql/firma_user_db.export.sql
 ```
