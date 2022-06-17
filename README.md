@@ -22,7 +22,7 @@ https://stackoverflow.com/a/47261923/11077105
 ## Compilación y lanzamiento con Docker para desarrollo
 Compilación de la imagen del contenedor compilador del `.jar`. La imagen de `Dockerfile.dev` desde una imagen de *maven* precarga las dependencias del proyecto (archivo `pom.xml`). Al momento del lanzamiento compila el `jar` y lanza el servidor en modo `LiveReload`:
 ```bash
-docker build -t firma_user_dev . -f Dockerfile.dev
+docker build -t firma_user_ms:dev . -f Dockerfile.dev
 ```
 Lanzamiento del contenedor compilador del `.jar`
 ```bash    
@@ -32,13 +32,13 @@ docker run -it --rm \
     -w /usr/src/app \
     -p 8090:8090 \
     --add-host=host.docker.internal:host-gateway \
-    firma_user_dev
+    firma_user_ms:dev
 ```
 
 ## Lanzamiento contenedor de producción
 La imagen de producción está basada en [`openjdk:8-jre-alpine`](https://hub.docker.com/layers/openjdk/library/openjdk/8-jdk-alpine/images/sha256-210ecd2595991799526a62a7099718b149e3bbefdb49764cc2a450048e0dd4c0?context=explore) cuyo peso comprimido es de 70.67 MB. Compilación de la imagen del contenedor:
 ``bash
-docker build -t firma_user_ms . -f Dockerfile.prod
+docker build -t firma_user_ms:prod . -f Dockerfile.prod
 ```
 Lanzamiento del contenedor.
 ```bash    
@@ -47,7 +47,7 @@ docker run -it --rm \
     -p 8090:8090 \
     --add-host=host.docker.internal:host-gateway \
     --env-file=src/main/resources/application-prod.properties \
-    firma_user_ms
+    firma_user_ms:prod
 ```
 
 ## Depuración para el contenedor de desarrollo
