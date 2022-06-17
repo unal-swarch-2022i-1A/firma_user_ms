@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +33,11 @@ import com.firma.firma_user_ms.model.User;
 public class UserDataAPI {
 	@Autowired
 	private UserRepository usrRepo;
+
+	@RequestMapping()
+	public @ResponseBody String rootPath() {
+		return "User micro-service Ok";
+	}	
 
 	@PostMapping()
 	public ResponseEntity<User> createUser(@RequestBody Map<String, String> jsonObject) {
