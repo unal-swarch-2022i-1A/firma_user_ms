@@ -2,9 +2,11 @@
 Repository for the user data management
 
 ## Base de datos
+El usuario y contraseña estan definidos en `src/main/resources/application.properties`. 
 Para importar la base de datos
 ```bash
-sudo -u postgres psql -f sql/firma_user_db.export.sql
+sudo -u postgres psql -f sql/firma_user_db.structure.sql
+sudo -u postgres psql -d firma_user_db -f sql/firma_user_db.user.data.sql
 ```
 
 ## Lanzamiento
@@ -15,10 +17,6 @@ Leer https://docs.spring.io/spring-boot/docs/2.0.x/reference/html/using-boot-run
 
 https://stackoverflow.com/a/47261923/11077105
 
-## Compilación en host
-```bash
-.\mvnw package
-```
 ## Compilación y lanzamiento con Docker para desarrollo
 Compilación de la imagen del contenedor compilador del `.jar`. La imagen de `Dockerfile.dev` desde una imagen de *maven* precarga las dependencias del proyecto (archivo `pom.xml`). Al momento del lanzamiento compila el `jar` y lanza el servidor en modo `LiveReload`:
 ```bash
@@ -27,7 +25,7 @@ docker build -t firma_user_ms:dev . -f Dockerfile.dev
 Lanzamiento del contenedor compilador del `.jar`
 ```bash    
 docker run -it --rm \
-    --name maven-project \
+    --name firma_user_ms_dev \
     -v "$(pwd)":/usr/src/app \
     -w /usr/src/app \
     -p 8090:8090 \
@@ -60,6 +58,10 @@ Salida
 tcp 0   0 127.0.0.1:5432    0.0.0.0:*   LISTEN  1401/postgres 
 ```
 
+Nos conectamos al contenedor de desarrollo. Notar la bander `--name` en el comando `run`
+```bash
+docker exec -it firma_user_ms_dev /bin/bash
+```
 En el contenedor corremos `ping` y `telnet` (instalándolos con `apt update && apt install iputils-ping telnet postgresql-client -y`) para verificar conexión IP y luego TCP
 Petición ICMP ECHO 
 ```bash
@@ -83,4 +85,11 @@ Escape character is '^]'.
 Probamos conexión con el cliente `psql`
 ```bash
 psql -h host.docker.internal -U firma firma_user_db
+```
+```postgres
+\dt
+SELECT * FROM "user";
+SELECT * FROM "user" AS u;
+SELECT u FROM public."user" u WHERE u.user_id = 1;
+SELECT * FROM public."user" u WHERE u.user_id = 1;
 ```
