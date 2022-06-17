@@ -1,4 +1,5 @@
 FROM openjdk:11-jre-slim
+RUN apt update && apt install iputils-ping telnet postgresql-client -y
 ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 COPY config/application.properties.docker /usr/local/lib/config/

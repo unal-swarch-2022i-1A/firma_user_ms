@@ -4,4 +4,6 @@ COPY mvnw /usr/src/app/mvnw
 COPY src /usr/src/app/src
 COPY pom.xml /usr/src/app/pom.xml
 WORKDIR /usr/src/app/
+RUN chmod +x ./mvnw
+RUN ls -al ./mvnw
 ENTRYPOINT ./mvnw package
