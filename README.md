@@ -36,7 +36,7 @@ docker run -it --rm \
 ## Lanzamiento contenedor de producción
 La imagen de producción está basada en [`openjdk:8-jre-alpine`](https://hub.docker.com/layers/openjdk/library/openjdk/8-jdk-alpine/images/sha256-210ecd2595991799526a62a7099718b149e3bbefdb49764cc2a450048e0dd4c0?context=explore) cuyo peso comprimido es de 70.67 MB. Compilación de la imagen del contenedor:
 ``bash
-docker build -t firma_user_ms:prod . -f Dockerfile.prod
+docker build -t firma_user_ms:prod . -f Dockerfile
 ```
 Lanzamiento del contenedor.
 ```bash    
