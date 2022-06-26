@@ -35,10 +35,12 @@ docker run -it --rm \
 
 ## Lanzamiento contenedor de producción
 La imagen de producción está basada en [`openjdk:8-jre-alpine`](https://hub.docker.com/layers/openjdk/library/openjdk/8-jdk-alpine/images/sha256-210ecd2595991799526a62a7099718b149e3bbefdb49764cc2a450048e0dd4c0?context=explore) cuyo peso comprimido es de 70.67 MB. Compilación de la imagen del contenedor:
-``bash
+
+```bash
 docker build -t firma_user_ms:prod . -f Dockerfile
 ```
 Lanzamiento del contenedor.
+
 ```bash    
 docker run -it --rm \
     --name firma_user_ms \
@@ -48,8 +50,9 @@ docker run -it --rm \
     firma_user_ms
 ```
 
-## Depuración para el contenedor de desarrollo
+## Depuración para el contenedor Alpine de producción
 En el host verificamos que efectivamente este corriendo Postgres en el puerto `5432`. La IP de  `Local Address` debe estar en `0.0.0.0`, si está en `127.0.0.1` no recibirá conexiones remotas. 
+
 ```bash
 sudo netstat -tulpn | grep 5432
 ```
@@ -60,9 +63,9 @@ tcp 0   0 127.0.0.1:5432    0.0.0.0:*   LISTEN  1401/postgres
 
 Nos conectamos al contenedor de desarrollo. Notar la bander `--name` en el comando `run`
 ```bash
-docker exec -it firma_user_ms_dev /bin/bash
+docker exec -it firma_user_ms_dev sh
 ```
-En el contenedor corremos `ping` y `telnet` (instalándolos con `apt update && apt install iputils-ping telnet postgresql-client -y`) para verificar conexión IP y luego TCP
+En el contenedor corremos `ping` y `telnet` (instalándolos con `apk update && apk add busybox-extras postgresql-client`) para verificar conexión IP y luego TCP
 Petición ICMP ECHO 
 ```bash
 ping host.docker.internal -c 1
