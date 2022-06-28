@@ -46,7 +46,6 @@ docker run -it --rm \
     --name firma_user_ms \
     -p 8090:8090 \
     --add-host=host.docker.internal:host-gateway \
-    --env-file=src/main/resources/application-prod.properties \
     firma_user_ms
 ```
 
