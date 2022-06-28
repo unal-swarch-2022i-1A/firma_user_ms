@@ -24,29 +24,35 @@ docker build -t firma_user_ms:dev . -f Dockerfile.dev
 ```
 Lanzamiento del contenedor compilador del `.jar`
 ```bash    
-docker run -it --rm \
-    --name firma_user_ms_dev \
+docker rm -f 'firma_user_ms_dev' && \
+docker run -dit --rm \
+    --name 'firma_user_ms_dev' \
     -v "$(pwd)":/usr/src/app \
     -w /usr/src/app \
-    -p 8090:8090 \
+    -p 3000:3000 \
     --add-host=host.docker.internal:host-gateway \
-    firma_user_ms:dev
+    firma_user_ms:dev && \
+docker logs --tail 1000 -f 'firma_user_ms_dev'
+docker exec -it 'firma_user_ms_dev' /bin/bash    
 ```
 
 ## Lanzamiento contenedor de producción
 La imagen de producción está basada en [`openjdk:8-jre-alpine`](https://hub.docker.com/layers/openjdk/library/openjdk/8-jdk-alpine/images/sha256-210ecd2595991799526a62a7099718b149e3bbefdb49764cc2a450048e0dd4c0?context=explore) cuyo peso comprimido es de 70.67 MB. Compilación de la imagen del contenedor:
 
 ```bash
-docker build -t firma_user_ms:prod . -f Dockerfile
+docker build -t firma_user_ms .
 ```
 Lanzamiento del contenedor.
 
 ```bash    
-docker run -it --rm \
-    --name firma_user_ms \
+docker rm -f 'firma_user_ms' && \
+docker run -dit --rm \
+    --name 'firma_user_ms' \
     -p 8090:8090 \
     --add-host=host.docker.internal:host-gateway \
-    firma_user_ms
+    firma_user_ms && \
+docker logs --tail 1000 -f 'firma_user_ms'
+docker exec -it 'firma_user_ms' /bin/bash        
 ```
 
 ## Depuración para el contenedor Alpine de producción
