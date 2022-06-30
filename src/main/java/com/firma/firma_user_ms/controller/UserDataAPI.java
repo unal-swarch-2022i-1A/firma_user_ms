@@ -67,7 +67,14 @@ public class UserDataAPI {
 	
 	@GetMapping("/{userId}")
 	public ResponseEntity<User> getUserInfo(@PathVariable int userId){
-		return new ResponseEntity<>(usrRepo.findUserById(userId), HttpStatus.OK);
+		User user = usrRepo.findUserById(userId);
+		if(user!=null) {
+			ResponseEntity responseEntity = new ResponseEntity<>(user, HttpStatus.OK);
+			return responseEntity;
+		} else {
+			ResponseEntity responseEntity = new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+			return responseEntity;
+		}
 	}
 	
 	@PostMapping("/user")

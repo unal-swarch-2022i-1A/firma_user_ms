@@ -5,8 +5,8 @@ Repository for the user data management
 El usuario y contraseña estan definidos en `src/main/resources/application.properties`. 
 Para importar la base de datos
 ```bash
-sudo -u postgres psql -f sql/firma_user_db.structure.sql
-sudo -u postgres psql -d firma_user_db -f sql/firma_user_db.user.data.sql
+sudo -u postgres psql -f firma_user_db/firma_user_db.structure.sql
+sudo -u postgres psql -d firma_user_db -f firma_user_db/firma_user_db.user.data.sql
 ```
 
 ## Lanzamiento
@@ -24,6 +24,7 @@ docker build -t firma_user_ms:dev . -f Dockerfile.dev
 ```
 Lanzamiento del contenedor compilador del `.jar`
 ```bash    
+cd firma_backend/firma_user_ms
 docker rm -f 'firma_user_ms_dev' && \
 docker run -dit --rm \
     --name 'firma_user_ms_dev' \
