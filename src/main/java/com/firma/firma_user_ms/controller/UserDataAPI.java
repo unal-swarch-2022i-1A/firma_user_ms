@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.firma.firma_user_ms.context.AppContext;
@@ -34,10 +36,31 @@ public class UserDataAPI {
 	@Autowired
 	private UserRepository usrRepo;
 
-	@RequestMapping()
-	public @ResponseBody String rootPath() {
-		return "User micro-service Ok";
-	}	
+	/**
+	 * Obtener usuario por email
+	 * Sobre /users?email=[email]
+	 * @param filters "email=kpassfield0@cocolog-nifty.com"
+	 * @return {User}
+	 */
+    @GetMapping
+    public ResponseEntity<User> getUserByEmail(@RequestParam Map<String, String> filters) {
+        if(filters.size()<1) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		} 		
+		String email = filters.get("email");
+        if(email==null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		} 				
+		User user = usrRepo.findUserByEmail(email);
+		if(user!=null) {
+			ResponseEntity responseEntity = new ResponseEntity<User>(user, HttpStatus.OK);
+			return responseEntity;
+		} else {
+			ResponseEntity responseEntity = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			return responseEntity;
+		}		
+    }		
+	
 
 	@PostMapping()
 	public ResponseEntity<User> createUser(@RequestBody Map<String, String> jsonObject) {
@@ -76,11 +99,7 @@ public class UserDataAPI {
 			return responseEntity;
 		}
 	}
-	
-	@PostMapping("/user")
-	public ResponseEntity<User> getUserbyEmail(@RequestBody Map<String, String> jsonObject){
-		String email = jsonObject.get("email");
-		return new ResponseEntity<>(usrRepo.findUserByEmail(email), HttpStatus.OK);
-	}
+
+
 	
 }

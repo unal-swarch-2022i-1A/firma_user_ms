@@ -1,6 +1,28 @@
 # firma_user_ms
 Repository for the user data management
 
+## TODO:
+SQL check
+```bash
+sudo -u postgres psql -d firma_user_db 
+```
+```SQL
+SELECT * FROM "user" u WHERE u.email = 'kpassfield0@cocolog-nifty.com';
+```
+```bash
+ user_id | first_name | last_name |             email             | password  
+---------+------------+-----------+-------------------------------+-----------
+       1 | Korry      | Passfield | kpassfield0@cocolog-nifty.com | mP9B1mSca
+(1 row)
+```
+
+REST check
+```bash
+curl -v --request GET --header "Content-Type: application/json"  http://localhost:3000/users?email=kpassfield0@cocolog-nifty.com
+```
+```json
+{"userId":1,"firstName":"Korry","lastName":"Passfield","email":"kpassfield0@cocolog-nifty.com","password":"mP9B1mSca"}
+```
 ## Base de datos
 El usuario y contraseña estan definidos en `src/main/resources/application.properties`. 
 Para importar la base de datos
