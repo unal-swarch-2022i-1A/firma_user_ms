@@ -12,9 +12,8 @@ CREATE USER firma WITH PASSWORD 'firma';
 GRANT CONNECT ON DATABASE firma_user_db TO firma;
 GRANT ALL PRIVILEGES ON DATABASE firma_user_db TO firma;
 GRANT ALL PRIVILEGES ON SCHEMA public TO firma;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO firma;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public to firma;
-GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public to firma;
+
+
 
 DROP TABLE IF EXISTS "user";	
 CREATE TABLE "user" (
@@ -24,6 +23,9 @@ CREATE TABLE "user" (
 	email VARCHAR(100) NOT NULL UNIQUE,
 	password VARCHAR(255) NOT NULL
 );
-GRANT ALL PRIVILEGES ON TABLE "user" TO firma;
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO firma;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public to firma;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public to firma;
 
 insert into "user" (first_name, last_name, email, password) values ('Korry', 'Passfield', 'kpassfield0@cocolog-nifty.com', 'mP9B1mSca');

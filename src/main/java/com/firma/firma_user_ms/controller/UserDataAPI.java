@@ -5,12 +5,13 @@ package com.firma.firma_user_ms.controller;
 
 import java.util.Map;
 
+import org.hibernate.annotations.Any;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,7 +35,7 @@ import com.firma.firma_user_ms.model.User;
 @RequestMapping("users")
 public class UserDataAPI {
 	@Autowired
-	private UserRepository usrRepo;
+	private UserRepository usrRepository;
 
 	/**
 	 * Obtener usuario por email
@@ -44,60 +45,79 @@ public class UserDataAPI {
 	 */
     @GetMapping
     public ResponseEntity<User> getUserByEmail(@RequestParam Map<String, String> filters) {
-        if(filters.size()<1) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		} 		
-		String email = filters.get("email");
-        if(email==null) {
-			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-		} 				
-		User user = usrRepo.findUserByEmail(email);
-		if(user!=null) {
-			ResponseEntity responseEntity = new ResponseEntity<User>(user, HttpStatus.OK);
-			return responseEntity;
-		} else {
-			ResponseEntity responseEntity = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-			return responseEntity;
-		}		
+		try {
+			if(filters.size()<1) {
+				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			} 		
+			String email = filters.get("email");
+			if(email==null) {
+				return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+			} 				
+			User user = usrRepository.selectByEmail(email);
+			if(user!=null) {
+				ResponseEntity<User> responseEntity = new ResponseEntity<User>(user, HttpStatus.OK);
+				return responseEntity;
+			} else {
+				ResponseEntity<User> responseEntity = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+				return responseEntity;
+			}		
+		} catch (Exception e) {
+			//TODO: handle exception
+			System.err.println(e);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}			
     }		
 	
-
+	/**
+	 * 
+	 * @param jsonObject
+	 * @return
+	 */
 	@PostMapping()
 	public ResponseEntity<User> createUser(@RequestBody Map<String, String> jsonObject) {
 		ApplicationContext appContext = new AnnotationConfigApplicationContext(AppContext.class);
 		User user = (User) appContext.getBean("userBean", jsonObject);
 		((AnnotationConfigApplicationContext) appContext).close();
-		usrRepo.save(user);
-		return new ResponseEntity<>(user, HttpStatus.CREATED);
+		try {
+			usrRepository.insert(user.getFirstName(),user.getLastName(),user.getEmail(),user.getPassword());
+			return new ResponseEntity<>(user, HttpStatus.CREATED);				
+		} catch (DataIntegrityViolationException e) {
+			System.err.println(e);
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@DeleteMapping("/{userId}")
 	public void deleteUser(@PathVariable int userId) {
-		User user = usrRepo.findUserById(userId);
-		usrRepo.delete(user);
+		User user = usrRepository.select(userId);
+		usrRepository.delete(user);
 	}
 	
 	@PutMapping("/{userId}")
 	public ResponseEntity<User> updateUser(@PathVariable int userId,  @RequestBody Map<String, String> jsonObject) {
-		User user = usrRepo.findUserById(userId);
+		User user = usrRepository.select(userId);
 		user.setFirstName(jsonObject.get("firstName"));
 		user.setLastName(jsonObject.get("lastName"));
 		user.setEmail(jsonObject.get("email"));
 		user.setPassword(jsonObject.get("password"));
-		usrRepo.save(user);
+		usrRepository.save(user);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{userId}")
 	public ResponseEntity<User> getUserInfo(@PathVariable int userId){
-		User user = usrRepo.findUserById(userId);
-		if(user!=null) {
-			ResponseEntity responseEntity = new ResponseEntity<>(user, HttpStatus.OK);
-			return responseEntity;
-		} else {
-			ResponseEntity responseEntity = new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
-			return responseEntity;
-		}
+		try {		
+			User user = usrRepository.select(userId);
+			if(user!=null) {
+				ResponseEntity responseEntity = new ResponseEntity<>(user, HttpStatus.OK);
+				return responseEntity;
+			} else {
+				ResponseEntity responseEntity = new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+				return responseEntity;
+			}
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}			
 	}
 
 

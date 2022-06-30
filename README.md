@@ -1,27 +1,28 @@
 # firma_user_ms
 Repository for the user data management
+## User
+- firstName
+- lastName
+- email
+- password
 
-## TODO:
-SQL check
-```bash
-sudo -u postgres psql -d firma_user_db 
-```
-```SQL
-SELECT * FROM "user" u WHERE u.email = 'kpassfield0@cocolog-nifty.com';
-```
-```bash
- user_id | first_name | last_name |             email             | password  
----------+------------+-----------+-------------------------------+-----------
-       1 | Korry      | Passfield | kpassfield0@cocolog-nifty.com | mP9B1mSca
-(1 row)
-```
-
+## Queries:
+**Get user by ID**
 REST check
 ```bash
-curl -v --request GET --header "Content-Type: application/json"  http://localhost:3000/users?email=kpassfield0@cocolog-nifty.com
+PORT=3000
+EMAIL=kpassfield0@cocolog-nifty.com
+curl -v -X GET -H "Content-Type: application/json" http://localhost:$PORT/users/?email=$EMAIL
 ```
 ```json
 {"userId":1,"firstName":"Korry","lastName":"Passfield","email":"kpassfield0@cocolog-nifty.com","password":"mP9B1mSca"}
+```
+**Create user**
+```bash
+PORT=3000
+curl -v -X POST -H "Content-Type: application/json" \
+-d '{"firstName":"abc'$RANDOM'","lastName":"linuxize","email":"email@email'$RANDOM'","password":"123"}' \
+http://localhost:$PORT/users/
 ```
 ## Base de datos
 El usuario y contraseña estan definidos en `src/main/resources/application.properties`. 
